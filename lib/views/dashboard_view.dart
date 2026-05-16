@@ -44,14 +44,10 @@ class DashboardView extends ConsumerWidget {
                   icon: const Icon(Icons.grid_view_rounded, color: AppTheme.textPrimary, size: 22),
                 );
               }),
-              title: Text(
-                'Quik Boom',
-                style: GoogleFonts.outfit(
-                  color: AppTheme.textPrimary,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  letterSpacing: -0.5,
-                ),
+              title: Image.asset(
+                'assets/images/logo.png',
+                height: 32,
+                fit: BoxFit.contain,
               ),
               centerTitle: true,
               actions: [

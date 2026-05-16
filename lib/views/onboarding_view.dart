@@ -20,13 +20,13 @@ class _OnboardingViewState extends State<OnboardingView> {
       title: 'Smart Lead Management',
       description: 'Track and nurture your leads with our intelligent automation suite. Never miss a conversion.',
       icon: Icons.auto_graph_rounded,
-      color: Colors.blue,
+      color: AppTheme.accentColor,
     ),
     OnboardingContent(
       title: 'Real-time Analytics',
       description: 'Get deep insights into your business performance with live dashboards and detailed reports.',
       icon: Icons.analytics_rounded,
-      color: Colors.orange,
+      color: AppTheme.warningColor,
     ),
     OnboardingContent(
       title: 'Team Collaboration',

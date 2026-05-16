@@ -3,20 +3,24 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   // Brand Colors
-  static const Color primaryColor = Color(0xFF6366F1); // Modern Indigo
-  static const Color accentColor = Color(0xFF8B5CF6); // Electric Violet
-  static const Color successColor = Color(0xFF10B981); // Emerald
-  static const Color warningColor = Color(0xFFF59E0B); // Amber
-  static const Color errorColor = Color(0xFFEF4444); // Red
+  static const Color primaryColor = Color(0xFF22C55E); // Primary Green
+  static const Color darkGreen = Color(0xFF16A34A); // Dark Green
+  static const Color lightGreen = Color(0xFFDCFCE7); // Light Green
+  static const Color accentColor = Color(0xFF3B82F6); // Blue Accent
+  static const Color successColor = Color(0xFF16A34A); // Dark Green
+  static const Color successBadge = Color(0xFFBBF7D0); // Success Badge
+  static const Color successText = Color(0xFF15803D); // Success Text
+  static const Color warningColor = Color(0xFFF59E0B); // Warning Orange
+  static const Color errorColor = Color(0xFFEF4444); // Danger Red
 
   // Neutral Colors
   static const Color sidebarBg = Color(0xFFF8FAFC);
   static const Color mainBg = Color(0xFFFFFFFF);
-  static const Color dashboardBg = Color(0xFFF1F5F9);
+  static const Color dashboardBg = Color(0xFFF8FAFC);
   static const Color cardBg = Color(0xFFFFFFFF);
-  static const Color textPrimary = Color(0xFF0F172A); // Slate 900
-  static const Color textSecondary = Color(0xFF64748B); // Slate 500
-  static const Color borderSide = Color(0xFFE2E8F0); // Slate 200
+  static const Color textPrimary = Color(0xFF0F172A); // Primary Text
+  static const Color textSecondary = Color(0xFF94A3B8); // Secondary Text
+  static const Color borderSide = Color(0xFFE5E7EB); // Border
 
   static ThemeData get lightTheme {
     return ThemeData(

@@ -46,24 +46,22 @@ class _SplashViewState extends State<SplashView> {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppTheme.primaryColor, AppTheme.primaryColor.withValues(alpha: 0.7)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(28),
                 boxShadow: [
                   BoxShadow(
-                    color: AppTheme.primaryColor.withValues(alpha: 0.3),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 20,
                     offset: const Offset(0, 10),
                   ),
                 ],
               ),
-              child: const Icon(
-                Icons.flash_on_rounded,
-                color: Colors.white,
-                size: 50,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(28),
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  fit: BoxFit.contain,
+                ),
               ),
             )
                 .animate()

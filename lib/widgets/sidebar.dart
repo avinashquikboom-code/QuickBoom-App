@@ -35,21 +35,23 @@ class Sidebar extends StatelessWidget {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [AppTheme.primaryColor, AppTheme.accentColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(14),
                     boxShadow: [
                       BoxShadow(
-                        color: AppTheme.primaryColor.withValues(alpha: 0.25),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
                       ),
                     ],
                   ),
-                  child: const Icon(Icons.flash_on_rounded, color: Colors.white, size: 26),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(14),
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Column(

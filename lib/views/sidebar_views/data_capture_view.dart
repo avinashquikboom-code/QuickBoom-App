@@ -205,7 +205,7 @@ class _DataCaptureViewState extends State<DataCaptureView> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text('Data captured successfully!'),
-          backgroundColor: Colors.green.shade600,
+          backgroundColor: AppTheme.successColor,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

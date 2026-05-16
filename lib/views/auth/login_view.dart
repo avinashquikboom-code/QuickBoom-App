@@ -91,10 +91,11 @@ class _LoginViewState extends State<LoginView> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(24),
                               ),
-                              child: const Icon(
-                                Icons.rocket_launch_rounded,
-                                size: 48,
-                                color: AppTheme.primaryColor,
+                              child: Image.asset(
+                                'assets/images/logo.png',
+                                width: 48,
+                                height: 48,
+                                fit: BoxFit.contain,
                               ),
                             ).animate().scale(delay: 200.ms, duration: 600.ms, curve: Curves.easeOutBack),
                             const SizedBox(height: 32),
@@ -142,10 +143,11 @@ class _LoginViewState extends State<LoginView> {
                               color: AppTheme.primaryColor.withValues(alpha: 0.1),
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
-                              Icons.rocket_launch_rounded,
-                              size: 32,
-                              color: AppTheme.primaryColor,
+                            child: Image.asset(
+                              'assets/images/logo.png',
+                              width: 32,
+                              height: 32,
+                              fit: BoxFit.contain,
                             ),
                           ),
                         ),

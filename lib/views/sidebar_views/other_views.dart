@@ -12,9 +12,9 @@ class ProposalsView extends StatelessWidget {
       icon: Icons.description_rounded,
       child: Column(
         children: [
-          _buildItemCard('Design System Update', 'Rahul Sharma', 'Pending', Colors.orange),
-          _buildItemCard('Mobile App Revamp', 'Priya Patel', 'Accepted', Colors.green),
-          _buildItemCard('Backend Integration', 'Suresh Kumar', 'Expired', Colors.red),
+          _buildItemCard('Design System Update', 'Rahul Sharma', 'Pending', AppTheme.warningColor),
+          _buildItemCard('Mobile App Revamp', 'Priya Patel', 'Accepted', AppTheme.successColor),
+          _buildItemCard('Backend Integration', 'Suresh Kumar', 'Expired', AppTheme.errorColor),
         ],
       ),
     );
@@ -67,10 +67,10 @@ class CustomersView extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: status == 'Active' ? Colors.green.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.1),
+              color: status == 'Active' ? AppTheme.successBadge : Colors.grey.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(6),
             ),
-            child: Text(status, style: TextStyle(color: status == 'Active' ? Colors.green : Colors.grey, fontSize: 10, fontWeight: FontWeight.bold)),
+            child: Text(status, style: TextStyle(color: status == 'Active' ? AppTheme.successText : Colors.grey, fontSize: 10, fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -94,9 +94,9 @@ class ProjectsView extends StatelessWidget {
         crossAxisSpacing: 16,
         childAspectRatio: 1.5,
         children: [
-          _buildProjectCard('QuickBoom UI', '80%', Colors.blue),
+          _buildProjectCard('QuickBoom UI', '80%', AppTheme.accentColor),
           _buildProjectCard('Sales CRM', '45%', Colors.purple),
-          _buildProjectCard('API Bridge', '100%', Colors.green),
+          _buildProjectCard('API Bridge', '100%', AppTheme.primaryColor),
         ],
       ),
     );

@@ -212,12 +212,12 @@ class AttendanceCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
           decoration: BoxDecoration(
-            color: AppTheme.successColor.withValues(alpha: 0.3),
+            color: AppTheme.successBadge,
             borderRadius: BorderRadius.circular(6),
           ),
           child: const Text(
             'LIVE STATUS',
-            style: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold),
+            style: TextStyle(color: AppTheme.successText, fontSize: 9, fontWeight: FontWeight.bold),
           ),
         ),
       ],
