@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quickboom_app/core/theme.dart';
 import '../../widgets/stat_card.dart';
+import '../../widgets/charts_section.dart';
 
 class DashboardContentView extends StatelessWidget {
   const DashboardContentView({super.key});
@@ -16,20 +17,52 @@ class DashboardContentView extends StatelessWidget {
         if (isMobile) const SliverToBoxAdapter(child: SizedBox(height: 100)),
         _buildHeader(context),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           sliver: SliverToBoxAdapter(
-            child: const AttendanceCard().animate().fadeIn(duration: 400.ms).slideY(begin: 0.1),
+            child: const AttendanceCard()
+                .animate()
+                .fadeIn(duration: 600.ms, curve: Curves.easeOut)
+                .slideY(begin: 0.1, end: 0, duration: 600.ms, curve: Curves.easeOut),
           ),
         ),
+        _buildSectionTitle('Performance Insights'),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          sliver: SliverToBoxAdapter(
+            child: const ChartsSection()
+                .animate()
+                .fadeIn(duration: 800.ms, curve: Curves.easeOut)
+                .slideY(begin: 0.1, end: 0, duration: 800.ms, curve: Curves.easeOut),
+          ),
+        ),
+        _buildSectionTitle('Operational Metrics'),
         _buildStatGrid(context),
+        const SliverToBoxAdapter(child: SizedBox(height: 40)),
       ],
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return SliverPadding(
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+      sliver: SliverToBoxAdapter(
+        child: Text(
+          title,
+          style: GoogleFonts.outfit(
+            fontSize: 14,
+            fontWeight: FontWeight.w800,
+            color: AppTheme.textSecondary.withValues(alpha: 0.6),
+            letterSpacing: 1.5,
+          ),
+        ),
+      ),
     );
   }
 
   Widget _buildHeader(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 32, 24, 16),
+        padding: const EdgeInsets.fromLTRB(24, 40, 24, 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -39,29 +72,37 @@ class DashboardContentView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Dashboard',
-                        style: GoogleFonts.outfit(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 28,
-                          color: AppTheme.textPrimary,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            'Welcome back,',
+                            style: GoogleFonts.outfit(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: AppTheme.textSecondary,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          const Icon(Icons.waving_hand_rounded, size: 16, color: Color(0xFFFFD700)),
+                        ],
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'CRM, revenue & operations summary.',
+                        'Avinash Magar',
                         style: GoogleFonts.outfit(
-                          fontSize: 14,
-                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 32,
+                          color: AppTheme.textPrimary,
+                          letterSpacing: -1,
                         ),
                       ),
                     ],
                   ),
                 ),
                 if (MediaQuery.of(context).size.width > 600) ...[
-                  _buildHeaderBadge(context, '3 credits', Colors.green, Icons.monetization_on_outlined),
+                  _buildHeaderBadge(context, '3 Credits', AppTheme.primaryColor, Icons.bolt_rounded),
                   const SizedBox(width: 12),
-                  _buildHeaderBadge(context, 'Online', Colors.green, Icons.wifi),
+                  _buildHeaderBadge(context, 'System Live', AppTheme.successColor, Icons.sensors_rounded),
                 ],
               ],
             ),
@@ -70,10 +111,9 @@ class DashboardContentView extends StatelessWidget {
               Wrap(
                 spacing: 12,
                 runSpacing: 12,
-                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  _buildHeaderBadge(context, '3 credits', Colors.green, Icons.monetization_on_outlined),
-                  _buildHeaderBadge(context, 'Online', Colors.green, Icons.wifi),
+                  _buildHeaderBadge(context, '3 Credits', AppTheme.primaryColor, Icons.bolt_rounded),
+                  _buildHeaderBadge(context, 'System Live', AppTheme.successColor, Icons.sensors_rounded),
                 ],
               ),
             ],
@@ -85,20 +125,24 @@ class DashboardContentView extends StatelessWidget {
 
   Widget _buildHeaderBadge(BuildContext context, String text, Color color, IconData icon) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withValues(alpha: 0.1)),
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withValues(alpha: 0.15)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: color),
-          const SizedBox(width: 6),
+          Icon(icon, size: 16, color: color),
+          const SizedBox(width: 8),
           Text(
             text,
-            style: TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.w600),
+            style: GoogleFonts.outfit(
+              color: color,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
@@ -111,109 +155,68 @@ class DashboardContentView extends StatelessWidget {
       sliver: SliverGrid(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 300,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          mainAxisExtent: 145,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
+          mainAxisExtent: 160,
         ),
         delegate: SliverChildListDelegate([
           const StatCard(
             title: 'TOTAL LEADS',
-            value: '1',
-            subtitle: '0 hot leads',
+            value: '1,284',
+            subtitle: '+12% from last month',
             icon: Icons.person_add_alt_1_rounded,
+            iconColor: AppTheme.primaryColor,
           ),
           const StatCard(
             title: 'HOT LEADS',
-            value: '0',
+            value: '42',
             subtitle: 'Ready to convert',
             icon: Icons.whatshot_rounded,
             iconColor: Colors.orange,
           ),
           const StatCard(
             title: 'OPEN PROPOSALS',
-            value: '0',
-            subtitle: '0 approved',
+            value: '18',
+            subtitle: '4 pending review',
             icon: Icons.description_rounded,
             iconColor: Colors.amber,
           ),
           const StatCard(
             title: 'TOTAL CUSTOMERS',
-            value: '0',
-            subtitle: 'Unique clients',
+            value: '856',
+            subtitle: 'Active accounts',
             icon: Icons.check_circle_rounded,
             iconColor: Colors.purple,
           ),
           const StatCard(
             title: 'REVENUE COLLECTED',
-            value: '₹0',
-            subtitle: '0 payments done',
+            value: '₹4.2L',
+            subtitle: 'This quarter',
             icon: Icons.currency_rupee_rounded,
             iconColor: Colors.green,
           ),
           const StatCard(
             title: 'PENDING PAYMENTS',
-            value: '₹0',
-            subtitle: '0 outstanding',
+            value: '₹84K',
+            subtitle: 'Overdue items',
             icon: Icons.hourglass_empty_rounded,
             iconColor: Colors.deepOrange,
           ),
           const StatCard(
             title: 'TOTAL PROJECTS',
-            value: '2',
-            subtitle: '2 active',
+            value: '12',
+            subtitle: '8 active now',
             icon: Icons.folder_rounded,
             iconColor: Colors.lightGreen,
           ),
           const StatCard(
             title: 'DELIVERED',
-            value: '0',
-            subtitle: '0 in bug fix',
-            icon: Icons.check_circle_rounded,
+            value: '142',
+            subtitle: 'Completed tasks',
+            icon: Icons.verified_rounded,
             iconColor: Colors.teal,
           ),
-          const StatCard(
-            title: 'EXPENSES (MONTH)',
-            value: '₹0',
-            subtitle: '0 pending',
-            icon: Icons.payments_rounded,
-            iconColor: Colors.redAccent,
-          ),
-          const StatCard(
-            title: 'TEAM PRESENT',
-            value: '1/1',
-            subtitle: '0 on leave',
-            icon: Icons.groups_rounded,
-            iconColor: Colors.cyan,
-          ),
-          const StatCard(
-            title: 'PACKAGES',
-            value: '8',
-            subtitle: 'Active plans',
-            icon: Icons.inventory_2_rounded,
-            iconColor: Colors.orangeAccent,
-          ),
-          const StatCard(
-            title: 'BUSINESSES EXTRACTED',
-            value: '0',
-            subtitle: 'Total data',
-            icon: Icons.business_rounded,
-            iconColor: Colors.blueGrey,
-          ),
-          const StatCard(
-            title: 'SEARCHES TODAY',
-            value: '0',
-            subtitle: 'Quota usage',
-            icon: Icons.search_rounded,
-            iconColor: Colors.blue,
-          ),
-          const StatCard(
-            title: 'API STATUS',
-            value: 'Active',
-            subtitle: 'Healthy',
-            icon: Icons.api_rounded,
-            iconColor: Colors.green,
-          ),
-        ].animate(interval: 50.ms).fadeIn(duration: 400.ms).scale(begin: const Offset(0.95, 0.95))),
+        ].animate(interval: 50.ms).fadeIn(duration: 500.ms, curve: Curves.easeOut).slideY(begin: 0.1, end: 0)),
       ),
     );
   }

@@ -29,51 +29,58 @@ class DashboardView extends ConsumerWidget {
       extendBodyBehindAppBar: true,
       appBar: isMobile
           ? AppBar(
-              backgroundColor: Colors.white.withValues(alpha: 0.8),
+              backgroundColor: Colors.white.withValues(alpha: 0.7),
               elevation: 0,
               scrolledUnderElevation: 0,
               flexibleSpace: ClipRect(
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                   child: Container(color: Colors.transparent),
                 ),
               ),
               leading: Builder(builder: (context) {
                 return IconButton(
                   onPressed: () => Scaffold.of(context).openDrawer(),
-                  icon: const Icon(Icons.menu_rounded, color: AppTheme.textPrimary),
+                  icon: const Icon(Icons.grid_view_rounded, color: AppTheme.textPrimary, size: 22),
                 );
               }),
               title: Text(
-                _getAppBarTitle(currentSelection),
+                'Quik Boom',
                 style: GoogleFonts.outfit(
                   color: AppTheme.textPrimary,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: 20,
+                  letterSpacing: -0.5,
                 ),
               ),
               centerTitle: true,
               actions: [
-                Hero(
-                  tag: 'logo',
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: AppTheme.primaryColor.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(8),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const NotificationsView()),
+                        );
+                      },
+                      icon: const Icon(Icons.notifications_outlined, color: AppTheme.textPrimary, size: 24),
                     ),
-                    child: const Icon(Icons.flash_on_rounded, color: AppTheme.primaryColor, size: 18),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const NotificationsView()),
-                    );
-                  },
-                  icon: const Icon(Icons.notifications_none_rounded, color: AppTheme.textPrimary),
+                    Positioned(
+                      top: 12,
+                      right: 12,
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: AppTheme.errorColor,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 1.5),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(width: 8),
               ],
@@ -120,40 +127,41 @@ class DashboardView extends ConsumerWidget {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, -2),
+                    color: Colors.black.withValues(alpha: 0.03),
+                    blurRadius: 20,
+                    offset: const Offset(0, -10),
                   ),
                 ],
               ),
               child: NavigationBar(
                 backgroundColor: Colors.white,
                 elevation: 0,
-                height: 65,
+                height: 70,
+                indicatorColor: AppTheme.primaryColor.withValues(alpha: 0.1),
                 selectedIndex: _getBottomNavIndex(currentSelection),
                 onDestinationSelected: (index) {
                   ref.read(sidebarSelectionProvider.notifier).select(_getItemFromIndex(index));
                 },
                 destinations: const [
                   NavigationDestination(
-                    icon: Icon(Icons.dashboard_outlined),
-                    selectedIcon: Icon(Icons.dashboard_rounded, color: AppTheme.primaryColor),
+                    icon: Icon(Icons.grid_view_rounded, color: AppTheme.textSecondary),
+                    selectedIcon: Icon(Icons.grid_view_rounded, color: AppTheme.primaryColor),
                     label: 'Home',
                   ),
                   NavigationDestination(
-                    icon: Icon(Icons.people_outline_rounded),
-                    selectedIcon: Icon(Icons.people_rounded, color: AppTheme.primaryColor),
+                    icon: Icon(Icons.contact_phone_outlined, color: AppTheme.textSecondary),
+                    selectedIcon: Icon(Icons.contact_phone_rounded, color: AppTheme.primaryColor),
                     label: 'Leads',
                   ),
                   NavigationDestination(
-                    icon: Icon(Icons.add_circle_outline_rounded),
-                    selectedIcon: Icon(Icons.add_circle_rounded, color: AppTheme.primaryColor),
-                    label: 'Capture',
+                    icon: Icon(Icons.rocket_launch_outlined, color: AppTheme.textSecondary),
+                    selectedIcon: Icon(Icons.rocket_launch_rounded, color: AppTheme.primaryColor),
+                    label: 'Data',
                   ),
                   NavigationDestination(
-                    icon: Icon(Icons.fingerprint_rounded),
+                    icon: Icon(Icons.fingerprint_rounded, color: AppTheme.textSecondary),
                     selectedIcon: Icon(Icons.fingerprint_rounded, color: AppTheme.primaryColor),
-                    label: 'Attendance',
+                    label: 'Access',
                   ),
                 ],
               ),
@@ -217,60 +225,36 @@ class DashboardView extends ConsumerWidget {
   void _handleLogout(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Logout', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
-        content: Text('Are you sure you want to logout from your session?', style: GoogleFonts.outfit()),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Cancel', style: GoogleFonts.outfit(color: AppTheme.textSecondary)),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginView()),
-                (route) => false,
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red[400],
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      builder: (context) => BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        child: AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          title: Text('Sign Out', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
+          content: Text('Are you sure you want to end your current session?', style: GoogleFonts.outfit()),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Stay logged in', style: GoogleFonts.outfit(color: AppTheme.textSecondary, fontWeight: FontWeight.w600)),
             ),
-            child: Text('Logout', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
-          ),
-        ],
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginView()),
+                  (route) => false,
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.errorColor,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              child: Text('Sign Out', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
+            ),
+          ],
+        ),
       ),
     );
-  }
-
-  String _getAppBarTitle(SidebarItem item) {
-    switch (item) {
-      case SidebarItem.dashboard:
-        return 'Dashboard';
-      case SidebarItem.dataCapture:
-        return 'Data Capture';
-      case SidebarItem.myLeads:
-        return 'My Leads';
-      case SidebarItem.proposals:
-        return 'Proposals';
-      case SidebarItem.customers:
-        return 'Customers';
-      case SidebarItem.projects:
-        return 'Projects';
-      case SidebarItem.aiGenerator:
-        return 'AI Generator';
-      case SidebarItem.smmWorkflow:
-        return 'SMM Workflow';
-      case SidebarItem.aiPublisher:
-        return 'AI Publisher';
-      case SidebarItem.attendance:
-        return 'Attendance';
-      case SidebarItem.settings:
-        return 'Settings';
-      default:
-        return 'Quik Boom';
-    }
   }
 }
