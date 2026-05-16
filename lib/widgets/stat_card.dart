@@ -37,8 +37,11 @@ class StatCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
@@ -175,11 +178,14 @@ class AttendanceCard extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 24),
                 child: Divider(color: Colors.white12),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Wrap(
+                spacing: 16,
+                runSpacing: 16,
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  if (isMobile) _buildTimeDisplay(),
-                  _buildActionButtons(),
+                  if (isMobile) _buildTimeDisplay(isMobile: isMobile),
+                  _buildActionButtons(isMobile: isMobile),
                 ],
               ),
             ],
@@ -189,16 +195,16 @@ class AttendanceCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTimeDisplay() {
+  Widget _buildTimeDisplay({bool isMobile = false}) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: isMobile ? CrossAxisAlignment.start : CrossAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           '12:24 PM',
           style: GoogleFonts.outfit(
             color: Colors.white,
-            fontSize: 28,
+            fontSize: isMobile ? 24 : 28,
             fontWeight: FontWeight.bold,
             letterSpacing: 1,
           ),
@@ -218,22 +224,25 @@ class AttendanceCard extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+  Widget _buildActionButtons({bool isMobile = false}) {
+    return Wrap(
+      spacing: isMobile ? 8 : 14,
+      runSpacing: 8,
+      alignment: WrapAlignment.end,
       children: [
         _ActionButton(
           label: 'Clock In',
           icon: Icons.login_rounded,
           onPressed: () {},
           isPrimary: false,
+          isMobile: isMobile,
         ),
-        const SizedBox(width: 14),
         _ActionButton(
           label: 'Clock Out',
           icon: Icons.logout_rounded,
           onPressed: () {},
           isPrimary: true,
+          isMobile: isMobile,
         ),
       ],
     );
@@ -245,12 +254,14 @@ class _ActionButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onPressed;
   final bool isPrimary;
+  final bool isMobile;
 
   const _ActionButton({
     required this.label,
     required this.icon,
     required this.onPressed,
     required this.isPrimary,
+    this.isMobile = false,
   });
 
   @override
@@ -268,13 +279,22 @@ class _ActionButton extends StatelessWidget {
       ),
       child: ElevatedButton.icon(
         onPressed: onPressed,
-        icon: Icon(icon, size: 18),
-        label: Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+        icon: Icon(icon, size: isMobile ? 16 : 18),
+        label: Text(
+          label,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: isMobile ? 12 : 14,
+          ),
+        ),
         style: ElevatedButton.styleFrom(
           backgroundColor: isPrimary ? Colors.white : Colors.white.withValues(alpha: 0.15),
           foregroundColor: isPrimary ? AppTheme.primaryColor : Colors.white,
           elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 16 : 24,
+            vertical: isMobile ? 12 : 16,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
             side: isPrimary ? BorderSide.none : BorderSide(color: Colors.white.withValues(alpha: 0.2)),
